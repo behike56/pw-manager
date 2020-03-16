@@ -15,6 +15,11 @@ from PySide2 import QtCore, QtWidgets, QtQml
 class PwGenerator(QtCore.QObject):
     def __init__(self, parent=None):
         super(PwGenerator, self).__init__(parent)
+        self.moji_num = 0
+        self.condition_oomoji = False
+        self.condition_kigou = False
+        self.condition_suuji = False
+        self.moji_hajimari = 0
 
 
 if __name__ == '__main__':
