@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """\
-pw-manager ロジック部分
+PwGenerator main logic
 
 Author:
     Hideo Tsujisaki

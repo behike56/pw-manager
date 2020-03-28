@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.3
 import QtQuick.Shapes 1.11
 import QtQuick.Controls.Material 2.0
+import QtQuick.Layouts 1.3
 
 Window {
     visible: true
@@ -106,20 +107,20 @@ Window {
             anchors.centerIn: parent
             spacing: 50
 
-            RadioButton {
+            RadioDelegate {
                 id: radioButton3
                 x: 189
                 y: 0
                 text: qsTr("文字始まり")
                 checked: true
             }
-            RadioButton {
+            RadioDelegate {
                 id: radioButton4
                 x: 369
                 y: 0
                 text: qsTr("記号始まり")
             }
-            RadioButton {
+            RadioDelegate {
                 id: radioButton5
                 x: 0
                 y: 0
@@ -143,20 +144,20 @@ Window {
             anchors.centerIn: parent
             spacing: 70
 
-            RadioButton {
+            RadioDelegate {
                 id: radioButton6
                 x: 0
                 y: 5
                 text: qsTr("なし")
                 checked: true
             }
-            RadioButton {
+            RadioDelegate {
                 id: radioButton7
                 x: 192
                 y: 5
                 text: qsTr("ー形式")
             }
-            RadioButton {
+            RadioDelegate {
                 id: radioButton8
                 x: 373
                 y: 5
