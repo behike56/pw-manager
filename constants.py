@@ -7,10 +7,17 @@ __version__ = "0.1"
 __author__ = "Hideo Tsujisaki"
 
 
-class Constants(object):
-    START_COND_MOJI = ("moji")
-    START_COND_KIGO = ("kigo")
-    START_COND_NUMB = ("numb")
+class _Constants(object):
+    class ConstError(TypeError):
+        pass
 
-    PASSWORD_STYLE_HYPHEN = ("hype")
-    PASSWORD_STYLE_DOTTS = ("dott")
+    def __repr__(self):
+        return "定数型の定義。"
+
+    def __setattr__(self, const_name, value):
+        if const_name in self.__dict__:
+            raise self.ConstError("定数には再代入できません。 (%s)" % const_name)
+        self.__dict__[const_name] = value
+
+    def __del__(self):
+        self.__dict__.clear()
