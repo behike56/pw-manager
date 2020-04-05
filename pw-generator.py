@@ -11,7 +11,7 @@ import os
 from PySide2.QtCore import QUrl
 from PySide2 import QtCore, QtWidgets, QtQml
 
-import pw-randomizer as pwr
+import PwRandomizer as pwr
 
 
 class PwGenerator(QtCore.QObject):
