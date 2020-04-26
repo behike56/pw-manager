@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.3
-import QtQuick.Shapes 1.11
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.3
 
@@ -14,48 +13,64 @@ Window {
 
         Button {
             id: button
-            x: 113
-            y: 35
+            x: 70
+            y: 9
             text: qsTr("生成")
+            onClicked: function(){
+                passDisplay.text = PwGenerator.stateHandler(
+                            radEight.state, radSixte.state, radTwetFor.state,
+                            chbxUpper.checkState, chbxKigo.checkState, chbxNumb.checkState,
+                            radMojiSta.state, radKigoSta.state, radNumbSta.state,
+                            radTypeNone.state, radTypeHype.state, radTypeDott.state)
+            }
         }
         Button {
             id: button1
-            x: 450
-            y: 35
+            x: 270
+            y: 9
             text: qsTr("クリア")
+        }
+        Button {
+            id: button2
+            x: 470
+            y: 9
+            text: qsTr("終了")
+            onClicked: function(){
+                Window.close()
+            }
         }
 
     GroupBox {
         id: groupBox1
         x: 70
-        y: 104
+        y: 60
         width: 500
-        height: 64
+        height: 70
         title: qsTr("文字数指定")
 
         Row{
             width: 476
-            height: 40
+            height: 60
             anchors.centerIn: parent
-            spacing: 70
+            spacing: 55
 
-            RadioButton {
-                id: radioButton
+            RadioDelegate {
+                id: radEight
                 x: 9
                 y: 3
                 text: qsTr("8文字")
                 checked: true
             }
 
-            RadioButton {
-                id: radioButton1
+            RadioDelegate {
+                id: radSixte
                 x: 162
                 y: 3
                 text: qsTr("16文字")
             }
 
-            RadioButton {
-                id: radioButton2
+            RadioDelegate {
+                id: radTwetFor
                 x: 334
                 y: 3
                 text: qsTr("24文字")
@@ -66,33 +81,33 @@ Window {
     GroupBox {
         id: groupBox
         x: 70
-        y: 186
+        y: 140
         width: 500
-        height: 100
+        height: 125
         title: qsTr("条件指定")
 
         Row{
             width: 476
-            height: 40
+            height: 60
             anchors.verticalCenterOffset: -15
             anchors.horizontalCenterOffset: 0
             anchors.centerIn: parent
             spacing: 70
 
             CheckBox {
-                id: checkBox
+                id: chbxUpper
                 x: 0
                 y: 0
                 text: qsTr("大文字")
             }
             CheckBox {
-                id: checkBox1
+                id: chbxKigo
                 x: 369
                 y: 0
                 text: qsTr("記号")
             }
             CheckBox {
-                id: checkBox3
+                id: chbxNumb
                 x: 189
                 y: 0
                 text: qsTr("数字")
@@ -101,27 +116,27 @@ Window {
 
         Row{
             width: 476
-            height: 40
+            height: 60
             anchors.verticalCenterOffset: 21
             anchors.horizontalCenterOffset: 0
             anchors.centerIn: parent
-            spacing: 50
+            spacing: 35
 
             RadioDelegate {
-                id: radioButton3
+                id: radMojiSta
                 x: 189
                 y: 0
                 text: qsTr("文字始まり")
                 checked: true
             }
             RadioDelegate {
-                id: radioButton4
+                id: radKigoSta
                 x: 369
                 y: 0
                 text: qsTr("記号始まり")
             }
             RadioDelegate {
-                id: radioButton5
+                id: radNumbSta
                 x: 0
                 y: 0
                 text: qsTr("数字始まり")
@@ -129,36 +144,37 @@ Window {
         }
     }
 
-
     GroupBox {
         id: groupBox3
         x: 70
-        y: 302
+        y: 271
         width: 500
-        height: 57
+        height: 70
         title: qsTr("形式指定")
 
         Row{
             width: 476
-            height: 40
+            height: 60
+            anchors.verticalCenterOffset: 3
+            anchors.horizontalCenterOffset: 0
             anchors.centerIn: parent
             spacing: 70
 
             RadioDelegate {
-                id: radioButton6
+                id: radTypeNone
                 x: 0
                 y: 5
                 text: qsTr("なし")
                 checked: true
             }
             RadioDelegate {
-                id: radioButton7
+                id: radTypeHype
                 x: 192
                 y: 5
                 text: qsTr("ー形式")
             }
             RadioDelegate {
-                id: radioButton8
+                id: radTypeDott
                 x: 373
                 y: 5
                 text: qsTr(".形式")
@@ -169,20 +185,25 @@ Window {
     GroupBox {
         id: groupBox2
         x: 70
-        y: 373
+        y: 354
         width: 500
         height: 88
-        title: qsTr("出力文字")
+        title: qsTr("生成パスワード")
 
         Text {
-            id: element
+            id: passDisplay
             x: 0
             y: 15
             width: 476
             height: 36
-            text: qsTr("")
+            text: qsTr("ここにパスワードが出力されます。")
             font.pixelSize: 12
         }
+        Label{
+            id: labelPassDisp
+            x: 0
+            y: 25
+            text: qsTr("pass")
+        }
     }
-
 }
