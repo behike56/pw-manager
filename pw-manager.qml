@@ -6,7 +6,7 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("文字列ジェネレータ")
+    title: qsTr("ぱすわーどジェネレータ")
     color: "darkgrey"
 
     Button {
@@ -171,10 +171,10 @@ Window {
         width: 500
         height: 90
         title: qsTr("生成パスワード")
-        label {
+        TextEdit {
             id: passDisplay
-            x: 40
-            y: 30
+            x: 100
+            y: 5
             width: 480
             height: 40
             text: qsTr("")

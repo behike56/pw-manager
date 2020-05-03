@@ -17,6 +17,7 @@ from PySide2.QtCore import QUrl
 
 from PwRandomizer import PwBuildCenter as pwb
 
+
 class PwGenerator(QtCore.QObject):
 
     def __init__(self, parent=None):
@@ -60,7 +61,7 @@ class PwGenerator(QtCore.QObject):
 
         # パスワード形式の設定
         if radTypeNone == 1:
-            pass
+            self.style = None
         if radTypeHype == 1:
             self.style = "hype"
         if radTypeDott == 1:
