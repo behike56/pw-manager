@@ -6,10 +6,13 @@
 """
 
 __version__ = "0.1"
-__author__ = "Hideo Tsujisaki"
+__author__  = "Hideo Tsujisaki"
 
-import random
-import string
+from random import choice
+from string import ascii_lowercase as strAscLow
+from string import ascii_uppercase as strAscUpp
+from string import digits as strDigi
+from string import punctuation as strPunc
 
 import constants as const
 
@@ -38,40 +41,42 @@ class PwBuildCenter(object):
     const.PASSWORD_STYLE_HYPHEN = "hype"
     const.PASSWORD_STYLE_DOTTS = "dott"
 
-    cond = ""
 
-    def __init__(self, char_lim, condition, start_con, style=None):
-        self.lower_case = string.ascii_lowercase
-        self.upper_case = string.ascii_uppercase
-        self.digits = string.digits
-        self.kigou = string.punctuation
+    def __init__(self, char_lim, condition, start_con, style):
+        self.lower_case = strAscLow
+        self.upper_case = strAscUpp
+        self.digits = strDigi
+        self.kigou = strPunc
 
         self.char_lim = char_lim
         self.condition = condition
         self.start_con = start_con
         self.style = style
 
-        self.pw_builder()
+        self.cond = ""
+        self.pass_word =""
+
 
     def pw_builder(self):
 
         self.cond_setter()
 
         # パスワード生成部
-        pass_word = ""
-
+        # 初めの文字の指定がある場合の設定（初期値は文字始まり）
         if self.start_con == const.START_COND_MOJI:
-            pass_word += random.choise(self.lower_case)
+            self.pass_word += choice(self.lower_case)
 
         if self.start_con == const.START_COND_KIGO:
-            pass_word += random.coise(self.kigou)
+            self.pass_word += choice(self.kigou)
 
         if self.start_con == const.START_COND_NUMB:
-            pass_word += random.choice(self.digits)
+            self.pass_word += choice(self.digits)
 
-        build_counter = 2
-        for build_counter in range(self.char_lim):
-            pass_word += random.choice(self.cond)
+        # 残りの文字を2文字目から生成していく
+        buildStart = 2
+        buildEnd = self.char_lim + 1
+        for ite in range(buildStart, buildEnd):
+            self.pass_word += choice(self.cond)
 
         # パスワード整形部
         cep_type = ""
@@ -82,35 +87,42 @@ class PwBuildCenter(object):
             cep_type = "."
 
         if self.style is not None:
-            if self.num == 8:
-                pass_word.replace(pass_word[2], cep_type)
-                pass_word.replace(pass_word[5], cep_type)
+            restrucutPw = ""
+            if self.char_lim == 8:
+                restrucutPw += self.pass_word[0:2] + cep_type
+                restrucutPw += self.pass_word[3:5] + cep_type
+                restrucutPw += self.pass_word[6:]
+                self.pass_word = restrucutPw
 
-            if self.num == 16:
-                pass_word.replace(pass_word[7], cep_type)
-                pass_word.replace(pass_word[12], cep_type)
+            if self.char_lim == 16:
+                restrucutPw += self.pass_word[0:5] + cep_type
+                restrucutPw += self.pass_word[6:10] + cep_type
+                restrucutPw += self.pass_word[11:]
+                self.pass_word = restrucutPw
 
-            if self.num == 32:
-                pass_word.replace(pass_word[9], cep_type)
-                pass_word.replace(pass_word[16], cep_type)
-                pass_word.replace(pass_word[23], cep_type)
-                pass_word.replace(pass_word[30], cep_type)
+            if self.char_lim == 24:
+                restrucutPw += self.pass_word[0:4] + cep_type
+                restrucutPw += self.pass_word[5:9] + cep_type
+                restrucutPw += self.pass_word[10:14] + cep_type
+                restrucutPw += self.pass_word[15:19] + cep_type
+                restrucutPw += self.pass_word[20:]
+                self.pass_word = restrucutPw
 
-            return pass_word
+        return self.pass_word
 
     def cond_setter(self):
         """\
             含める文字の設定（複数同時指定可能）
             Return: String ex."ab", "ac"
-            condition: 大文字=a、記号=b、数字=c
+            condition: 大文字=A、記号=B、数字=C
             """
-        cond = self.lower_case
+        self.cond = self.lower_case
 
-        if "a" in self.condition:
-            cond += self.upper_case
+        if "A" in self.condition:
+            self.cond += self.upper_case
 
-        if "b" in self.condition:
-            cond += self.kigou
+        if "B" in self.condition:
+            self.cond += self.kigou
 
-        if "c" in self.condition:
-            cond += self.digits
+        if "C" in self.condition:
+            self.cond += self.digits

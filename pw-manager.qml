@@ -1,8 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.3
-import QtQuick.Controls.Material 2.0
-import QtQuick.Layouts 1.3
 
 Window {
     visible: true
@@ -11,35 +9,19 @@ Window {
     title: qsTr("文字列ジェネレータ")
     color: "darkgrey"
 
-        Button {
-            id: button
-            x: 70
-            y: 9
-            text: qsTr("生成")
-            onClicked: function(){
-                passDisplay.text = PwGenerator.stateHandler(
-                            radEight.state, radSixte.state, radTwetFor.state,
-                            chbxUpper.checkState, chbxKigo.checkState, chbxNumb.checkState,
-                            radMojiSta.state, radKigoSta.state, radNumbSta.state,
-                            radTypeNone.state, radTypeHype.state, radTypeDott.state)
-            }
+    Button {
+        id: button
+        x: 70
+        y: 9
+        text: qsTr("生成")
+        onClicked: function(){
+            passDisplay.text = PwGenerator.stateHandler(
+                radEight.checked, radSixte.checked, radTwetFor.checked,
+                chbxUpper.checkState, chbxKigo.checkState, chbxNumb.checkState,
+                radMojiSta.checked, radKigoSta.checked, radNumbSta.checked,
+                radTypeNone.checked, radTypeHype.checked, radTypeDott.checked)
         }
-        Button {
-            id: button1
-            x: 270
-            y: 9
-            text: qsTr("クリア")
-        }
-        Button {
-            id: button2
-            x: 470
-            y: 9
-            text: qsTr("終了")
-            onClicked: function(){
-                Window.close()
-            }
-        }
-
+    }
     GroupBox {
         id: groupBox1
         x: 70
@@ -187,23 +169,16 @@ Window {
         x: 70
         y: 354
         width: 500
-        height: 88
+        height: 90
         title: qsTr("生成パスワード")
-
-        Text {
+        label {
             id: passDisplay
-            x: 0
-            y: 15
-            width: 476
-            height: 36
-            text: qsTr("ここにパスワードが出力されます。")
-            font.pixelSize: 12
-        }
-        Label{
-            id: labelPassDisp
-            x: 0
-            y: 25
-            text: qsTr("pass")
+            x: 40
+            y: 30
+            width: 480
+            height: 40
+            text: qsTr("")
+            font.pixelSize: 20
         }
     }
 }

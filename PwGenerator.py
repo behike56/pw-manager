@@ -11,36 +11,25 @@ __version__ = "0.1"
 __author__ = "Hideo Tsujisaki"
 
 import sys
+from PySide2 import QtCore, QtWidgets
+from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QUrl
-from PySide2 import QtCore, QtWidgets, QtQml
 
-from PwRandomizer import PwBuildCenter as pwr
-
+from PwRandomizer import PwBuildCenter as pwb
 
 class PwGenerator(QtCore.QObject):
 
-    # def __init__(self, parent=None):
-    #     super(PwGenerator, self).__init__(parent)
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(PwGenerator, self).__init__(parent)
+    # def __init__(self):
+    #     super().__init__()
         self.char_lim = 0
         self.condition = ""
         self.start_con = 0
         self.style = None
+        self.pass_word = ""
 
-    @QtCore.Slot(int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 int,
-                 result=str)
+    @QtCore.Slot(int, int, int, int, int, int, int, int, int, int, int, int, result=str)
     def stateHandler(self, radEight, radSixte, radTwetFor, chbxUpper, chbxKigo,
                      chbxNumb, radMojiSta, radKigoSta, radNumbSta, radTypeNone,
                      radTypeHype, radTypeDott):
@@ -53,6 +42,7 @@ class PwGenerator(QtCore.QObject):
             self.char_lim = 24
 
         # 含める文字種の設定
+        self.condition = ""
         if chbxUpper == 2:
             self.condition += "A"
         if chbxKigo == 2:
@@ -76,22 +66,26 @@ class PwGenerator(QtCore.QObject):
         if radTypeDott == 1:
             self.style = "dott"
 
-        result = pwr(self.char_lim, self.condition, self.start_con, self.style)
-        return result
+        objPwb = pwb(self.char_lim, self.condition, self.start_con, self.style)
+        return objPwb.pw_builder()
+
+    def __del__(self):
+        self.condition = ""
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
+    # app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication()
 
     myconnect = PwGenerator()
 
-    engine = QtQml.QQmlApplicationEngine()
+    engine = QQmlApplicationEngine()
     bind = engine.rootContext()
     bind.setContextProperty("PwGenerator", myconnect)
 
     engine.load(QUrl("pw-manager.qml"))
 
-    if not engine.rootObjects():
-        sys.exit(-1)
+    # if not engine.rootObjects():
+    #     sys.exit(-1)
 
     sys.exit(app.exec_())
